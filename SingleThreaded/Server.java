@@ -1,10 +1,16 @@
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
+
+
 public class Server{
 
-    public void run(){
+    public void run() throws IOException, UnknownHostException{
 
         int port = 8010;
         ServerSocket socket =  new ServerSocket(port);
@@ -14,10 +20,10 @@ public class Server{
                 System.out.println("Server is listening on port" + port);
                 Socket acceptedConnectiom = socket.accept();
                 System.out.println("Connection accepted from " + acceptedConnectiom.getRemoteSocketAddress());
-                PrintWriter toClient = new PrintWriter(acceptedConnectiom.getOutputStream());
-                BufferReader fromClient = new BufferReader(new InputStreamReader(acceptedConnectiom.getInputStream()));
+                PrintWriter toClient = new PrintWriter(acceptedConnectiom.getOutputStream(), true);
+                BufferedReader fromClient = new BufferedReader(new InputStreamReader(acceptedConnectiom.getInputStream()));
                 toClient.println("Hello from the Server");
-            }catch (IoException ex){
+            }catch (IOException ex){
                 ex.printStackTrace();
             }
         }
@@ -29,7 +35,7 @@ public class Server{
 
             Server server = new Server();
             try{
-                server.run()
+                server.run();
             }catch(Exception ex){
                 ex.printStackTrace();
             }
