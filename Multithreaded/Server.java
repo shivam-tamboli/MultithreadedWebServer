@@ -1,5 +1,6 @@
 package Multithreaded;
 
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.function.Consumer;
@@ -7,7 +8,16 @@ import java.util.function.Consumer;
 public class Server {
 
     public Consumer<Socket> getConsumer(){
-        return
+        return(clientSocket) -> {
+            try{
+                PrintWriter toClient =  new PrintWriter(clientSocket.getOutputStream());
+                toClient.println("Hello from the server");
+                toClient.close();
+                clientSocket.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        };
     }
 
     public static void main(String[] args) {
