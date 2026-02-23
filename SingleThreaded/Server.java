@@ -23,6 +23,9 @@ public class Server{
                 PrintWriter toClient = new PrintWriter(acceptedConnectiom.getOutputStream(), true);
                 BufferedReader fromClient = new BufferedReader(new InputStreamReader(acceptedConnectiom.getInputStream()));
                 toClient.println("Hello from the Server");
+                toClient.close();
+                fromClient.close();
+                acceptedConnectiom.close();
             }catch (IOException ex){
                 ex.printStackTrace();
             }

@@ -15,7 +15,23 @@ public class Client {
         PrintWriter toSocket = new PrintWriter(socket.getOutputStream());
         BufferedReader fromSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         toSocket.println("Hello from the Client");
+        String line = fromSocket.readLine();
+        System.out.println("Response from the socket is : " + line);
+        toSocket.close();
+        fromSocket.close();
+        socket.close();
+
+    
 
     }
 
+
+    public static void main(String[] args) {
+        try{
+            Client client = new Client();
+            client.run();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
 }
